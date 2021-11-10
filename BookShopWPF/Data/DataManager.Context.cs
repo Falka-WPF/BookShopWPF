@@ -29,5 +29,6 @@ namespace BookShopWPF.Data
         public virtual DbSet<Publisher> Publishers { get; set; }
         public virtual DbSet<Genre> GenreSet { get; set; }
         public virtual DbSet<Author> Authors { get; set; }
+        public virtual DbSet<Sales> Sales { get; set; }
     }
 }

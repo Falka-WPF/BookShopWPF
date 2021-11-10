@@ -12,6 +12,8 @@
         <AssociationConnector Association="DataManager.BookPublisher" />
         <AssociationConnector Association="DataManager.BookGenre" />
         <AssociationConnector Association="DataManager.AuthorBook" />
+        <EntityTypeShape EntityType="DataManager.Sales" Width="1.5" PointX="5.25" PointY="6" />
+        <AssociationConnector Association="DataManager.SalesBook" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

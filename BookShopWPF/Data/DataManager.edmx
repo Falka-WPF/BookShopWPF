@@ -10,6 +10,7 @@
     <EntitySet Name="Publishers" EntityType="DataManager.Store.Publishers" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GenreSet" EntityType="DataManager.Store.GenreSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Authors" EntityType="DataManager.Store.Authors" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Sales" EntityType="DataManager.Store.Sales" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="BookPublisher" Association="DataManager.Store.BookPublisher">
       <End Role="Book" EntitySet="Books" />
       <End Role="Publisher" EntitySet="Publishers" />
@@ -20,6 +21,10 @@
     </AssociationSet>
     <AssociationSet Name="AuthorBook" Association="DataManager.Store.AuthorBook">
       <End Role="Author" EntitySet="Authors" />
+      <End Role="Book" EntitySet="Books" />
+    </AssociationSet>
+    <AssociationSet Name="SalesBook" Association="DataManager.Store.SalesBook">
+      <End Role="Sales" EntitySet="Sales" />
       <End Role="Book" EntitySet="Books" />
     </AssociationSet>
   </EntityContainer>
@@ -35,6 +40,7 @@
     <Property Name="PublisherId" Type="int" Nullable="false" />
     <Property Name="GenreId" Type="int" Nullable="false" />
     <Property Name="AuthorId" Type="int" Nullable="false" />
+    <Property Name="Price" Type="float" Nullable="false" />
   </EntityType>
   <EntityType Name="Publishers">
     <Key>
@@ -56,6 +62,14 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FIO" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sales">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BookId" Type="int" Nullable="false" />
+    <Property Name="SaleDate" Type="datetime" Nullable="false" />
   </EntityType>
   <Association Name="BookPublisher">
     <End Role="Book" Type="DataManager.Store.Books" Multiplicity="*" />
@@ -93,6 +107,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="SalesBook">
+    <End Role="Sales" Type="DataManager.Store.Sales" Multiplicity="*" />
+    <End Role="Book" Type="DataManager.Store.Books" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Sales">
+        <PropertyRef Name="BookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -114,6 +140,11 @@
             <End Role="Author" EntitySet="Authors" />
             <End Role="Book" EntitySet="Books" />
           </AssociationSet>
+          <EntitySet Name="Sales" EntityType="DataManager.Sales" />
+          <AssociationSet Name="SalesBook" Association="DataManager.SalesBook">
+            <End Role="Sales" EntitySet="Sales" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Book">
           <Key>
@@ -130,6 +161,8 @@
           <Property Name="GenreId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Author" Relationship="DataManager.AuthorBook" FromRole="Book" ToRole="Author" />
           <Property Name="AuthorId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Sales" Relationship="DataManager.SalesBook" FromRole="Book" ToRole="Sales" />
+          <Property Name="Price" Type="Double" Nullable="false" />
         </EntityType>
         <EntityType Name="Publisher">
           <Key>
@@ -191,6 +224,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Sales">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Book" Relationship="DataManager.SalesBook" FromRole="Sales" ToRole="Book" />
+          <Property Name="BookId" Type="Int32" Nullable="false" />
+          <Property Name="SaleDate" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <Association Name="SalesBook">
+          <End Type="DataManager.Sales" Role="Sales" Multiplicity="*" />
+          <End Type="DataManager.Book" Role="Book" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -208,6 +262,7 @@
           <ScalarProperty Name="PublisherId" ColumnName="PublisherId" />
           <ScalarProperty Name="GenreId" ColumnName="GenreId" />
           <ScalarProperty Name="AuthorId" ColumnName="AuthorId" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -232,6 +287,15 @@
         <MappingFragment StoreEntitySet="Authors">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="FIO" ColumnName="FIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sales">
+      <EntityTypeMapping TypeName="IsTypeOf(DataManager.Sales)">
+        <MappingFragment StoreEntitySet="Sales">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BookId" ColumnName="BookId" />
+          <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

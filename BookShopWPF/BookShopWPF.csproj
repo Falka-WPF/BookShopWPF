@@ -114,6 +114,10 @@
     <Compile Include="Data\Publisher.cs">
       <DependentUpon>DataManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Sales.cs">
+      <DependentUpon>DataManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\AppViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -141,9 +145,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DataManager.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Data\DataManager.edmx.diagram">
-      <DependentUpon>DataManager.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -153,9 +154,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Data\BooksDatabase.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
