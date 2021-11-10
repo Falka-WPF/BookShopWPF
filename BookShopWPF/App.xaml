@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:BookShopWPF"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Name="StyleSheet1" Source="Dictionaries/StyleSheet1.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

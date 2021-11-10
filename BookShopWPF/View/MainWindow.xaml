@@ -5,8 +5,67 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookShopWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="500" Width="800"
+        MinHeight="450" MinWidth="750"
+        >
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.1*"/>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0">
+            <Label Content="Author:" DockPanel.Dock="Top"/>
+            <ComboBox DockPanel.Dock="Top"/>
+            <Label Content="Publisher:" DockPanel.Dock="Top"/>
+            <ComboBox DockPanel.Dock="Top"/>
+            <Label Content="Genre:" DockPanel.Dock="Top"/>
+            <ComboBox DockPanel.Dock="Top"/>
+            <Button DockPanel.Dock="Top" Content="Filter"/>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <StackPanel.Resources>
+                    <Style TargetType="RadioButton">
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="FontStyle" Value="Normal"/>
+                        <Setter Property="Margin" Value="2"/>
+                    </Style>
+                </StackPanel.Resources>
+            <RadioButton Content="Author"/>
+            <RadioButton Content="Publisher"/>
+            <RadioButton Content="Genre"/>
+            </StackPanel>
+            <!--<ListBox DockPanel.Dock="Bottom"/>-->
+            <DockPanel DockPanel.Dock="Bottom">
+                <DockPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Margin" Value="2"/>
+                        <Setter Property="Padding" Value="2"/>
+                    </Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="Margin" Value="2"/>
+                        <Setter Property="Padding" Value="2"/>
+                    </Style>
+                </DockPanel.Resources>
+                <Button Content="Save" DockPanel.Dock="Right"/>
+                <Button Content="Delete" DockPanel.Dock="Right"/>
+                <Button Content="Add" DockPanel.Dock="Right"/>
+                <TextBox/>
+            </DockPanel>
+            <ListBox/>
+        </DockPanel>
+        <DockPanel Grid.Column="1">
+            <ListView>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="20">Id</GridViewColumn>
+                        <GridViewColumn Width="50">Title</GridViewColumn>
+                        <GridViewColumn Width="120">About</GridViewColumn>
+                        <GridViewColumn Width="50">Year</GridViewColumn>
+                        <GridViewColumn Width="40">Pages</GridViewColumn>
+                        <GridViewColumn Width="50">Price</GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
     </Grid>
 </Window>
