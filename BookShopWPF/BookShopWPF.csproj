@@ -79,6 +79,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="DataProviders\DataProviders.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Dictionaries\StyleSheet1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -91,6 +95,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Data\Author.cs">
       <DependentUpon>DataManager.tt</DependentUpon>
     </Compile>
@@ -121,6 +126,7 @@
     <Compile Include="Data\Sales.cs">
       <DependentUpon>DataManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ABGModel.cs" />
     <Compile Include="ViewModel\AppViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -178,6 +184,9 @@
       <LastGenOutput>DataManager.cs</LastGenOutput>
       <DependentUpon>DataManager.edmx</DependentUpon>
     </Content>
+    <Resource Include="Images\AddIcon.png" />
+    <Resource Include="Images\DeleteIcon.png" />
+    <Resource Include="Images\SaveIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
