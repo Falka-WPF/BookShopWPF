@@ -22,6 +22,9 @@ namespace BookShopWPF.ViewModel
         public ObservableCollection<Publisher> Publishers { get; set; }
         public ObservableCollection<Book> Books { get; set; }
         public ObservableCollection<ABGModel> ABGModels { get; set; }
+        public ABGModel _selectedABGModel;
+        public ABGModel SelectedABGModel { get { return _selectedABGModel; } set { _selectedABGModel = value; OnPropertyChange("SelectedABGModel"); } }
+
         public ICommand RadioButtonCommand { get; set; }
 
         private string _selectedRadioButton;
@@ -37,9 +40,10 @@ namespace BookShopWPF.ViewModel
         public AppViewModel()
         {
             _dmc = new DataManagerContainer();
-            _dmc.Authors.Add(new Author() { FIO = "test" });
-            
-            _dmc.SaveChanges();
+            //_dmc.Authors.Add(new Author() { FIO = "test" });
+            //_dmc.Publishers.Add(new Publisher() { Name = "Example publisher" });
+            //_dmc.GenreSet.Add(new Genre() { Name = "Example genre" });
+            //_dmc.SaveChanges();
             Authors = new ObservableCollection<Author>();
             Genres = new ObservableCollection<Genre>();
             Publishers = new ObservableCollection<Publisher>();
@@ -56,12 +60,157 @@ namespace BookShopWPF.ViewModel
             LoadAuthorsList();
             LoadPublishersList();
             LoadBooksList();
+            LoadList();
         }
 
-        private void SwitchProvider(string key)
-        {
-           
+        private RelayCommand _addItem;
+        public RelayCommand AddItem {
+            get {
+                return _addItem ?? (_addItem = new RelayCommand(
+                    (obj) =>
+                    {
+                        if (SelectedRadioButton == "Author")
+                        {
+                            Author tmp = new Author() { FIO = "New author" };
+                            _dmc.Authors.Add(tmp);
+                            _dmc.SaveChanges();
+                            LoadAuthorsList();
+                            LoadList();
+                        } else if (SelectedRadioButton == "Publisher") {
+                            Publisher tmp = new Publisher() { Name = "New publisher" };
+                            _dmc.Publishers.Add(tmp);
+                            _dmc.SaveChanges();
+                            LoadPublishersList();
+                            LoadList();
+                        }
+                        else
+                        {
+                            Genre tmp = new Genre() { Name = "New genre" };
+                            _dmc.GenreSet.Add(tmp);
+                            _dmc.SaveChanges();
+                            LoadGenresList();
+                            LoadList();
+                        }
+                    }
+                    ));
+            }
         }
+        private RelayCommand _updateItem;
+        public RelayCommand UpdateItem
+        {
+            get { return _updateItem ?? (_updateItem = new RelayCommand(
+                (obj) => {
+
+                    var items = ABGModels.ToArray();
+                    if (SelectedRadioButton == "Author")
+                    {
+                        foreach (var item in _dmc.Authors)
+                        {
+                            var Aitems = ABGModels.Where(s => s.Id == item.Id).ToList();
+                            if (Aitems.ToList().Count > 0)
+                            {
+                                item.FIO = Aitems.FirstOrDefault().Name;
+                            }
+                        }
+                    }
+                    else if (SelectedRadioButton == "Publisher")
+                    {
+                        foreach (var item in _dmc.Publishers)
+                        {
+                            var Aitems = ABGModels.Where(s => s.Id == item.Id).ToList();
+                            if (Aitems.ToList().Count > 0)
+                            {
+                                item.Name = Aitems.FirstOrDefault().Name;
+                            }
+                        }
+                    }
+                    else {
+                        foreach (var item in _dmc.GenreSet)
+                        {
+                            var Aitems = ABGModels.Where(s => s.Id == item.Id).ToList();
+                            if (Aitems.ToList().Count > 0)
+                            {
+                                item.Name = Aitems.FirstOrDefault().Name;
+                            }
+                        }
+                    }
+                    _dmc.SaveChanges();
+                    MessageBox.Show("Sucessfully updated!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //
+                    //
+                    //{
+                    //    foreach(var author in _dmc.Authors)
+                    //    {
+                    //        _dmc.Authors.Remove(author);
+                    //    }
+                    //    _dmc.SaveChanges();
+                    //    foreach (var item in items)
+                    //    {
+                    //        _dmc.Authors.Add(new Author() { FIO = item.Name });
+                    //    }
+                    //}
+                    //else if (SelectedRadioButton == "Publisher")
+                    //{
+                    //    foreach (var publisher in _dmc.Publishers)
+                    //    {
+                    //        _dmc.Publishers.Remove(publisher);
+                    //    }
+                    //    _dmc.SaveChanges();
+                    //    foreach (var item in items)
+                    //    {
+                    //        _dmc.Publishers.Add(new Publisher() { Name = item.Name });
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    // If Genre selected
+                    //    foreach (var genre in _dmc.GenreSet)
+                    //    {
+                    //        _dmc.GenreSet.Remove(genre);
+                    //    }
+                    //    _dmc.SaveChanges();
+                    //    foreach (var item in items)
+                    //    {
+                    //        _dmc.GenreSet.Add(new Genre() { Name = item.Name });
+                    //    }
+                    //}
+                    //_dmc.SaveChanges();
+                    //
+                })); 
+            }
+        }
+
+        private RelayCommand _deleteItem;
+        public RelayCommand DeleteItem
+        {
+            get {return _deleteItem ?? (_deleteItem = new RelayCommand(
+                (obj) =>{
+                    if (SelectedABGModel != null)
+                    {
+                        if (SelectedRadioButton == "Author")
+                        {
+                            _dmc.Authors.Remove(_dmc.Authors.Where(s => s.FIO == SelectedABGModel.Name).FirstOrDefault());
+                        }
+                        else if(SelectedRadioButton == "Publisher")
+                        {
+                            _dmc.Publishers.Remove(_dmc.Publishers.Where(s => s.Name == SelectedABGModel.Name).FirstOrDefault());
+                            
+                        } else
+                        {
+                            //Genre delete
+                            _dmc.GenreSet.Remove(_dmc.GenreSet.Where(s => s.Name == SelectedABGModel.Name).FirstOrDefault());
+                        }
+                        _dmc.SaveChanges();
+                        LoadAuthorsList();
+                        LoadPublishersList();
+                        LoadGenresList();
+                        LoadList();
+                        MessageBox.Show("Sucessuflly deleted!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                })); 
+            }
+        }
+
         private void LoadList()
         {
             if(SelectedRadioButton == "Author")
@@ -85,6 +234,7 @@ namespace BookShopWPF.ViewModel
             else
             {
                 // Load Genre
+                ABGModels.Clear();
                 foreach (var item in Genres)
                 {
                     ABGModels.Add(new ABGModel() { Id = item.Id, Name = item.Name });

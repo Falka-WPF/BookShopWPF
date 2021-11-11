@@ -35,7 +35,7 @@
                 <RadioButton Content="Publisher" Name="Publisher_radioButton" Command="{Binding Path=RadioButtonCommand}"
                              CommandParameter="{Binding ElementName=Publisher_radioButton, Path=Content}"/>
                 <RadioButton Content="Genre" Name="Genre_radioButton" Command="{Binding Path=RadioButtonCommand}"
-                             CommandParameter="{Binding ElementName=Genre_radioButton, Path=Content}"
+                             CommandParameter="{Binding ElementName=Genre_radioButton, Path=Content}" IsChecked="True"
                              />
             </StackPanel>
             <!--<ListBox DockPanel.Dock="Bottom"/>-->
@@ -50,19 +50,23 @@
                         <Setter Property="Padding" Value="2"/>
                     </Style>
                 </DockPanel.Resources>
-                
-                <Button x:Name="Save_Button" DockPanel.Dock="Right">
+
+                <Button x:Name="Save_Button" DockPanel.Dock="Right" Command="{Binding UpdateItem}">
                     <Image Source="../Images/SaveIcon.png" Height="25"/>
                 </Button>
-                <Button x:Name="Delete_Button" DockPanel.Dock="Right">
+                <Button x:Name="Delete_Button" DockPanel.Dock="Right" Command="{Binding DeleteItem}">
                     <Image Source="../Images/DeleteIcon.png" Height="25"/>
                 </Button>
-                <Button x:Name="Add_Button" DockPanel.Dock="Right">
+                <Button x:Name="Add_Button" DockPanel.Dock="Right" Command="{Binding AddItem}">
                     <Image Source="../Images/AddIcon.png" Height="25"/>
                 </Button>
-                <TextBox/>
+                <TextBox  DataContext="{Binding SelectedABGModel}"
+                          Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                    />
             </DockPanel>
-            <ListBox x:Name="ContentEditor_ListBox" ItemsSource="{Binding ABGModels}" DisplayMemberPath="Name" />
+            <ListBox x:Name="ContentEditor_ListBox" ItemsSource="{Binding ABGModels}"
+                     SelectedItem="{Binding SelectedABGModel}"
+                     DisplayMemberPath="Name" />
         </DockPanel>
         <DockPanel Grid.Column="1">
             <ListView>
