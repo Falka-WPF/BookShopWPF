@@ -18,13 +18,17 @@ namespace BookShopWPF.ViewModel
     {
         private DataManagerContainer _dmc;
         public ObservableCollection<Author> Authors { get; set; }
+        public Author SelectedAuthor { get; set; }
         public ObservableCollection<Genre> Genres { get; set; }
+        public Genre SelectedGenre { get; set; }
         public ObservableCollection<Publisher> Publishers { get; set; }
-        public ObservableCollection<Book> Books { get; set; }
+        public Publisher SelectedPublisher { get; set; }
+        public ObservableCollection<BookViewModel> Books { get; set; }
+        private BookViewModel _selectedBook;
+        public BookViewModel SelectedBook { get { return _selectedBook; } set {  _selectedBook = value;OnPropertyChange("SelectedBook"); } }
         public ObservableCollection<ABGModel> ABGModels { get; set; }
         public ABGModel _selectedABGModel;
         public ABGModel SelectedABGModel { get { return _selectedABGModel; } set { _selectedABGModel = value; OnPropertyChange("SelectedABGModel"); } }
-
         public ICommand RadioButtonCommand { get; set; }
 
         private string _selectedRadioButton;
@@ -47,7 +51,7 @@ namespace BookShopWPF.ViewModel
             Authors = new ObservableCollection<Author>();
             Genres = new ObservableCollection<Genre>();
             Publishers = new ObservableCollection<Publisher>();
-            Books = new ObservableCollection<Book>();
+            Books = new ObservableCollection<BookViewModel>();
 
             ABGModels = new ObservableCollection<ABGModel>();
 
@@ -135,47 +139,10 @@ namespace BookShopWPF.ViewModel
                         }
                     }
                     _dmc.SaveChanges();
+                    LoadAuthorsList();
+                    LoadPublishersList();
+                    LoadGenresList();
                     MessageBox.Show("Sucessfully updated!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-                    //
-                    //
-                    //{
-                    //    foreach(var author in _dmc.Authors)
-                    //    {
-                    //        _dmc.Authors.Remove(author);
-                    //    }
-                    //    _dmc.SaveChanges();
-                    //    foreach (var item in items)
-                    //    {
-                    //        _dmc.Authors.Add(new Author() { FIO = item.Name });
-                    //    }
-                    //}
-                    //else if (SelectedRadioButton == "Publisher")
-                    //{
-                    //    foreach (var publisher in _dmc.Publishers)
-                    //    {
-                    //        _dmc.Publishers.Remove(publisher);
-                    //    }
-                    //    _dmc.SaveChanges();
-                    //    foreach (var item in items)
-                    //    {
-                    //        _dmc.Publishers.Add(new Publisher() { Name = item.Name });
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    // If Genre selected
-                    //    foreach (var genre in _dmc.GenreSet)
-                    //    {
-                    //        _dmc.GenreSet.Remove(genre);
-                    //    }
-                    //    _dmc.SaveChanges();
-                    //    foreach (var item in items)
-                    //    {
-                    //        _dmc.GenreSet.Add(new Genre() { Name = item.Name });
-                    //    }
-                    //}
-                    //_dmc.SaveChanges();
-                    //
                 })); 
             }
         }
@@ -209,6 +176,32 @@ namespace BookShopWPF.ViewModel
                     }
                 })); 
             }
+        }
+
+        private RelayCommand _addBook;
+        public RelayCommand AddBook
+        {
+            get {
+                return _addBook ?? (_addBook = new RelayCommand(
+               (obj) =>
+               {
+                   if(SelectedAuthor!=null && SelectedGenre!=null && SelectedPublisher != null)
+                   {
+                       int AId = SelectedAuthor.Id;
+                       int GId = SelectedGenre.Id;
+                       int PId = SelectedPublisher.Id;
+                       Book bk = new Book() { Id = 0, AuthorId = AId, GenreId = GId, PublisherId = PId, About = "New about", Title = "New title", Pages = 0, Year = 0, Price = 0 };
+                       Books.Add(new BookViewModel(bk));
+                       //_dmc.Books.Add(bk);
+                       //_dmc.SaveChanges();
+                      // LoadBooksList();
+                   }
+                   else
+                   {
+                       System.Windows.MessageBox.Show("Some items not selected.", "Warning", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                   }
+               }
+               )); }
         }
 
         private void LoadList()
@@ -246,7 +239,7 @@ namespace BookShopWPF.ViewModel
             Books.Clear();
             foreach (var item in _dmc.Books)
             {
-                Books.Add(item);
+                Books.Add(new BookViewModel(item));
             }
         }
         private void LoadGenresList()
@@ -256,6 +249,10 @@ namespace BookShopWPF.ViewModel
             {
                 Genres.Add(item);
             }
+            if (Genres.Count > 0)
+            {
+                SelectedGenre = Genres[0];
+            }
         }
         private void LoadAuthorsList()
         {
@@ -263,6 +260,10 @@ namespace BookShopWPF.ViewModel
             foreach (var item in _dmc.Authors)
             {
                 Authors.Add(item);
+            }
+            if (Authors.Count > 0)
+            {
+                SelectedAuthor = Authors[0];
             }
         }
         private void LoadPublishersList()
@@ -272,7 +273,13 @@ namespace BookShopWPF.ViewModel
             {
                 Publishers.Add(item);
             }
+            if (Publishers.Count > 0)
+            {
+                SelectedPublisher = Publishers[0];
+            }
         }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChange([CallerMemberName]string prop="")

@@ -16,11 +16,12 @@
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0">
             <Label Content="Author:" DockPanel.Dock="Top"/>
-            <ComboBox DockPanel.Dock="Top"/>
+            <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding Authors}" SelectedItem="{Binding SelectedAuthor}" DisplayMemberPath="FIO"/>
             <Label Content="Publisher:" DockPanel.Dock="Top"/>
-            <ComboBox DockPanel.Dock="Top"/>
-            <Label Content="Genre:" DockPanel.Dock="Top"/>
-            <ComboBox DockPanel.Dock="Top"/>
+            <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding Publishers}" SelectedItem="{Binding SelectedPublisher}" DisplayMemberPath="Name"/>
+            <Label Content="Genre:" DockPanel.Dock="Top"
+                   />
+            <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding Genres}" SelectedItem="{Binding SelectedGenre}" DisplayMemberPath="Name"/>
             <Button DockPanel.Dock="Top" Content="Filter"/>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                 <StackPanel.Resources>
@@ -69,18 +70,58 @@
                      DisplayMemberPath="Name" />
         </DockPanel>
         <DockPanel Grid.Column="1">
-            <ListView>
+            <ListView
+                ItemsSource="{Binding Path=Books}"
+                SelectedItem="{Binding SelectedBook}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Height" Value="30" />
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="20">Id</GridViewColumn>
-                        <GridViewColumn Width="50">Title</GridViewColumn>
-                        <GridViewColumn Width="120">About</GridViewColumn>
-                        <GridViewColumn Width="50">Year</GridViewColumn>
-                        <GridViewColumn Width="40">Pages</GridViewColumn>
-                        <GridViewColumn Width="50">Price</GridViewColumn>
+                        <GridViewColumn Width="20" DisplayMemberBinding="{Binding Id}" Header="Id"></GridViewColumn>
+                        <GridViewColumn Width="50" DisplayMemberBinding="{Binding Title}">Title</GridViewColumn>
+                        <GridViewColumn Width="120" DisplayMemberBinding="{Binding About}">About</GridViewColumn>
+                        <GridViewColumn Width="50" DisplayMemberBinding="{Binding Year}" Header="Year"></GridViewColumn>
+                        <GridViewColumn Width="40" DisplayMemberBinding="{Binding Pages}" Header="Pages"></GridViewColumn>
+                        <GridViewColumn Width="50" DisplayMemberBinding="{Binding Price}" Header="Price"></GridViewColumn>
                     </GridView>
                 </ListView.View>
             </ListView>
+        </DockPanel>
+        <DockPanel Grid.Column="2">
+            <Label Content="Book configuration" DockPanel.Dock="Top" HorizontalAlignment="Center" Foreground="Purple"/>
+            <Label Content="Title:" DockPanel.Dock="Top"/>
+            <TextBox DockPanel.Dock="Top"  DataContext="{Binding SelectedBook}" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Content="About:" DockPanel.Dock="Top"/>
+
+            <DockPanel DockPanel.Dock="Bottom">
+                <Button x:Name="SaveBook_Button" DockPanel.Dock="Right">
+                    <Image Source="../Images/SaveIcon.png" Height="25"/>
+                </Button>
+                <Button x:Name="DeleteBook_Button" DockPanel.Dock="Right">
+                    <Image Source="../Images/DeleteIcon.png" Height="25"/>
+                </Button>
+                <Button x:Name="AddBook_Button" Command="{Binding AddBook}">
+                    <Image Source="../Images/AddIcon.png" Height="25"/>
+                </Button>
+            </DockPanel>
+            <StackPanel DockPanel.Dock="Bottom">
+                <Label Content="Year"/>
+                <TextBox DockPanel.Dock="Bottom" Text="{Binding SelectedBook.Year, UpdateSourceTrigger=PropertyChanged}"/>
+            
+                <Label Content="Pages"/>
+                <TextBox DockPanel.Dock="Bottom" Text="{Binding SelectedBook.Pages, UpdateSourceTrigger=PropertyChanged}"/>
+            
+                <Label Content="Price"/>
+                <TextBox DockPanel.Dock="Bottom" Text="{Binding SelectedBook.Price, UpdateSourceTrigger=PropertyChanged}"/>
+            
+            </StackPanel>
+            <TextBox Text="{Binding SelectedBook.About, UpdateSourceTrigger=PropertyChanged}" 
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Visible"/>
         </DockPanel>
     </Grid>
 </Window>
