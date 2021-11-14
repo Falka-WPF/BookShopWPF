@@ -14,7 +14,16 @@
             <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <DockPanel Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0" Grid.ColumnSpan="3">
+            <MenuItem Header="Sales control" Command="{Binding OpenSalesWindows}"></MenuItem>
+        </Menu>
+        
+        <DockPanel Grid.Column="0" Grid.Row="1">
             <Label Content="Author:" DockPanel.Dock="Top"/>
             <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding Authors}" SelectedItem="{Binding SelectedAuthor}" DisplayMemberPath="FIO"/>
             <Label Content="Publisher:" DockPanel.Dock="Top"/>
@@ -22,7 +31,8 @@
             <Label Content="Genre:" DockPanel.Dock="Top"
                    />
             <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding Genres}" SelectedItem="{Binding SelectedGenre}" DisplayMemberPath="Name"/>
-            <Button DockPanel.Dock="Top" Content="Filter"/>
+            <Button Foreground="DeepPink" DockPanel.Dock="Top" Content="Filter" Command="{Binding FilterItems}"/>
+            <Button Foreground="Red" DockPanel.Dock="Top" Content="Reset filter" Command="{Binding ResetItems}"/>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                 <StackPanel.Resources>
                     <Style TargetType="RadioButton">
@@ -69,7 +79,7 @@
                      SelectedItem="{Binding SelectedABGModel}"
                      DisplayMemberPath="Name" />
         </DockPanel>
-        <DockPanel Grid.Column="1">
+        <DockPanel Grid.Column="1" Grid.Row="1">
             <ListView
                 ItemsSource="{Binding Path=Books}"
                 SelectedItem="{Binding SelectedBook}">
@@ -90,7 +100,7 @@
                 </ListView.View>
             </ListView>
         </DockPanel>
-        <DockPanel Grid.Column="2">
+        <DockPanel Grid.Column="2" Grid.Row="1">
             <Label Content="Book configuration" DockPanel.Dock="Top" HorizontalAlignment="Center" Foreground="Purple"/>
             <Label Content="Title:" DockPanel.Dock="Top"/>
             <TextBox DockPanel.Dock="Top"  DataContext="{Binding SelectedBook}" Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>

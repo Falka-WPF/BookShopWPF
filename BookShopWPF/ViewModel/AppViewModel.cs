@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Data;
 using System.Windows;
 using BookShopWPF.Models;
+using BookShopWPF.View;
 namespace BookShopWPF.ViewModel
 {
     public class AppViewModel : INotifyPropertyChanged
@@ -178,6 +179,34 @@ namespace BookShopWPF.ViewModel
             }
         }
 
+        private RelayCommand _filterItems;
+        public RelayCommand FilterItems {
+            get { return _filterItems ?? (_filterItems = new RelayCommand((obj) => {
+            if (SelectedAuthor != null && SelectedGenre != null && SelectedPublisher != null)
+                {
+                    Books.Clear();
+                    int SAuthorId = SelectedAuthor.Id;
+                    int SGenreId = SelectedGenre.Id;
+                    int SPublisherId = SelectedPublisher.Id;
+                    var items = _dmc.Books.Where(b => (b.AuthorId == SAuthorId && b.GenreId == SGenreId && b.PublisherId == SPublisherId)).ToList();
+                    foreach (var item in items)
+                    { 
+                        Books.Add(new BookViewModel(item));
+                    }
+                }
+            })); }
+        }
+        public RelayCommand _resetItems;
+        public RelayCommand ResetItems
+        {
+            get {
+                return _resetItems ?? (_resetItems = new RelayCommand((obj) =>
+          {
+              LoadBooksList();
+          }));
+            }
+        }
+
         private RelayCommand _addBook;
         public RelayCommand AddBook
         {
@@ -225,6 +254,7 @@ namespace BookShopWPF.ViewModel
                 }
                 _dmc.SaveChanges();
                 LoadBooksList();
+                System.Windows.MessageBox.Show("Sucessfuly updated!", "Information", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
             })); }
         }
 
@@ -244,7 +274,17 @@ namespace BookShopWPF.ViewModel
           })); }
 
         }
-
+        private RelayCommand _openSalesWindows;
+        public RelayCommand OpenSalesWindows
+        {
+            get {
+                return _openSalesWindows ?? (_openSalesWindows = new RelayCommand((obj) =>
+          {
+              SalesControl sc = new SalesControl();
+              sc.ShowDialog();
+          }));
+            }
+        }
         private void LoadList()
         {
             if(SelectedRadioButton == "Author")
