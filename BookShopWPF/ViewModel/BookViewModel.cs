@@ -11,70 +11,55 @@ namespace BookShopWPF.ViewModel
 {
     public class BookViewModel :INotifyPropertyChanged
     {
+        private Book _book;
         public BookViewModel(Book book)
         {
-            this.Id = book.Id;
-            this.Title = book.Title;
-            this.About = book.About;
-            this.Year = book.Year;
-            this.Pages = book.Pages;
-            this.PublisherId = book.PublisherId;
-            this.GenreId = book.GenreId;
-            this.AuthorId = book.AuthorId;
-            this.Price = book.Price;
+            this._book = book;
         }
-        private int _id { get; set; }
         public int Id {
-            get { return _id;}
-            set { _id = value; OnPropertyChanged("Id"); }}
-        private string _title { get; set; }
+            get { return _book.Id;}
+            set { _book.Id = value; OnPropertyChanged("Id"); }}
         public string Title
         {
-            get { return _title; }
-            set { Console.WriteLine("Changed!"); _title = value; OnPropertyChanged("Title"); }
+            get { return _book.Title; }
+            set { Console.WriteLine("Changed!"); _book.Title = value; OnPropertyChanged("Title"); }
         }
-        private string _about { get; set; }
         public string About
         {
-            get { return _about; }
-            set { _about = value; OnPropertyChanged("About"); }
+            get { return _book.About; }
+            set { _book.About = value; OnPropertyChanged("About"); }
         }
-        private int _year { get; set; }
         public int Year
         {
-            get { return _year; }
-            set { _year = value; OnPropertyChanged("Year"); }
+            get { return _book.Year; }
+            set { _book.Year = value; OnPropertyChanged("Year"); }
         }
-        private int _pages { get; set; }
         public int Pages
         {
-            get { return _pages; }
-            set { _pages = value; OnPropertyChanged("Pages"); }
+            get { return _book.Pages; }
+            set { _book.Pages = value; OnPropertyChanged("Pages"); }
         }
-        private int _publisherId { get; set; }
         public int PublisherId
         {
-            get { return _publisherId; }
-            set { _publisherId = value; OnPropertyChanged("PublisherId"); }
+            get { return _book.PublisherId; }
+            set { _book.PublisherId = value; OnPropertyChanged("PublisherId"); }
         }
-        private int _genreId { get; set; }
         public int GenreId
         {
-            get { return _genreId; }
-            set { _genreId = value; OnPropertyChanged("GenreId"); }
+            get { return _book.GenreId; }
+            set { _book.GenreId = value; OnPropertyChanged("GenreId"); }
         }
-        private int _authorId { get; set; }
         public int AuthorId
         {
-            get { return _authorId; }
-            set { _authorId = value; OnPropertyChanged("AuthorId"); }
+            get { return _book.AuthorId; }
+            set { _book.AuthorId = value; OnPropertyChanged("AuthorId"); }
         }
-        private double _price { get; set; }
         public double Price
         {
-            get { return _price; }
-            set { _price = value; OnPropertyChanged("Price"); }
+            get { return _book.Price; }
+            set { _book.Price = value; OnPropertyChanged("Price"); }
         }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

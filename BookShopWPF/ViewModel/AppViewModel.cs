@@ -204,6 +204,47 @@ namespace BookShopWPF.ViewModel
                )); }
         }
 
+        private RelayCommand _updateBook;
+        public RelayCommand UpdateBook
+        {
+            get {
+            return _updateBook ?? (_updateBook = new RelayCommand((obj) =>
+            {
+                var books = Books.Where(b => b.Id == 0).ToList();
+                foreach(var book in books)
+                {
+                    _dmc.Books.Add(new Book() {
+                        Title = book.Title,
+                        About = book.About,
+                        AuthorId = book.AuthorId,
+                        GenreId = book.GenreId,
+                        Pages = book.Pages,
+                        Price = book.Price,
+                        Year = book.Year,
+                        PublisherId = book.PublisherId });
+                }
+                _dmc.SaveChanges();
+                LoadBooksList();
+            })); }
+        }
+
+        private RelayCommand _deleteBook;
+        public RelayCommand DeleteBook
+        {
+            get {
+                return _deleteBook ?? (_deleteBook = new RelayCommand((obj) =>
+          {
+              string BookName = SelectedBook.Title;
+              int Id = SelectedBook.Id;
+              var DBook = _dmc.Books.Where(b => (b.Id == Id && b.Title == BookName)).FirstOrDefault();
+              _dmc.Books.Remove(DBook);
+              _dmc.SaveChanges();
+              LoadBooksList();
+              System.Windows.MessageBox.Show("Sucessfuly deleted!", "Information", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+          })); }
+
+        }
+
         private void LoadList()
         {
             if(SelectedRadioButton == "Author")

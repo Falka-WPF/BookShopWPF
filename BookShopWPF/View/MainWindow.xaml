@@ -97,10 +97,10 @@
             <Label Content="About:" DockPanel.Dock="Top"/>
 
             <DockPanel DockPanel.Dock="Bottom">
-                <Button x:Name="SaveBook_Button" DockPanel.Dock="Right">
+                <Button x:Name="SaveBook_Button" DockPanel.Dock="Right" Command="{Binding UpdateBook}">
                     <Image Source="../Images/SaveIcon.png" Height="25"/>
                 </Button>
-                <Button x:Name="DeleteBook_Button" DockPanel.Dock="Right">
+                <Button x:Name="DeleteBook_Button" DockPanel.Dock="Right" Command="{Binding DeleteBook}">
                     <Image Source="../Images/DeleteIcon.png" Height="25"/>
                 </Button>
                 <Button x:Name="AddBook_Button" Command="{Binding AddBook}">
