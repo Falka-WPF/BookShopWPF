@@ -7,17 +7,28 @@
         mc:Ignorable="d"
         Title="SalesView" Height="450" Width="800"
         MinHeight="400" MinWidth="600">
-    <DockPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0">
         <Button Content="Close" DockPanel.Dock="Bottom" Click="Close_Button_Click"/>
         <ListView ItemsSource="{Binding SalesList}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="60" DisplayMemberBinding="{Binding Id}"/>
-                    <GridViewColumn Header="Book title" Width="400" DisplayMemberBinding="{Binding Book.Title}"/>
+                    <GridViewColumn Header="Book title" Width="200" DisplayMemberBinding="{Binding Book.Title}"/>
                     <GridViewColumn Header="Price" Width="100" DisplayMemberBinding="{Binding Book.Price}"/>
                     <GridViewColumn Header="Sell date" Width="200" DisplayMemberBinding="{Binding SaleDate}"/>
                 </GridView>
             </ListView.View>
         </ListView>
     </DockPanel>
+        <StackPanel Grid.Column="1">
+            <Label Content="Sort by:" DockPanel.Dock="Top"/>
+            <ComboBox x:Name="SortByComboBox" Height="30" ItemsSource="{Binding SortedOptions, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedOption}" DisplayMemberPath="SortName"/>
+            <Button x:Name="Sort_Button" Content="Sort" Command="{Binding FilterItems}"/> 
+        </StackPanel>
+    </Grid>
 </Window>

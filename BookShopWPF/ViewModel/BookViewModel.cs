@@ -22,7 +22,7 @@ namespace BookShopWPF.ViewModel
         public string Title
         {
             get { return _book.Title; }
-            set { Console.WriteLine("Changed!"); _book.Title = value; OnPropertyChanged("Title"); }
+            set { _book.Title = value; OnPropertyChanged("Title"); }
         }
         public string About
         {

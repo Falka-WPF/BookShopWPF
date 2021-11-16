@@ -115,6 +115,7 @@
     <Compile Include="Data\Users.cs">
       <DependentUpon>DataManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SortedOption.cs" />
     <Compile Include="ViewModel\SalesViewModel.cs" />
     <Compile Include="View\AuthorizationWindow.xaml.cs">
       <DependentUpon>AuthorizationWindow.xaml</DependentUpon>
