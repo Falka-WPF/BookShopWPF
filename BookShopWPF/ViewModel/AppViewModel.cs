@@ -42,13 +42,10 @@ namespace BookShopWPF.ViewModel
                 LoadList();
             }   
         }
-        public AppViewModel()
+        public AppViewModel(DataManagerContainer dmc)
         {
-            _dmc = new DataManagerContainer();
-            //_dmc.Authors.Add(new Author() { FIO = "test" });
-            //_dmc.Publishers.Add(new Publisher() { Name = "Example publisher" });
-            //_dmc.GenreSet.Add(new Genre() { Name = "Example genre" });
-            //_dmc.SaveChanges();
+            //_dmc = new DataManagerContainer();
+            _dmc = dmc;
             Authors = new ObservableCollection<Author>();
             Genres = new ObservableCollection<Genre>();
             Publishers = new ObservableCollection<Publisher>();

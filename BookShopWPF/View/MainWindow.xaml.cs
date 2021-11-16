@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BookShopWPF.ViewModel;
+using BookShopWPF.Data;
 
 namespace BookShopWPF.View
 {
@@ -21,10 +22,10 @@ namespace BookShopWPF.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(DataManagerContainer dmc)
         {
             InitializeComponent();
-            this.DataContext = new AppViewModel();
+            this.DataContext = new AppViewModel(dmc);
         }
     }
 }

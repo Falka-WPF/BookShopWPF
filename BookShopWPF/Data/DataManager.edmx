@@ -11,6 +11,7 @@
     <EntitySet Name="GenreSet" EntityType="DataManager.Store.GenreSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Authors" EntityType="DataManager.Store.Authors" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Sales" EntityType="DataManager.Store.Sales" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="DataManager.Store.Users" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="BookPublisher" Association="DataManager.Store.BookPublisher">
       <End Role="Book" EntitySet="Books" />
       <End Role="Publisher" EntitySet="Publishers" />
@@ -70,6 +71,14 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="BookId" Type="int" Nullable="false" />
     <Property Name="SaleDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="BookPublisher">
     <End Role="Book" Type="DataManager.Store.Books" Multiplicity="*" />
@@ -145,6 +154,7 @@
             <End Role="Sales" EntitySet="Sales" />
             <End Role="Book" EntitySet="Books" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="DataManager.Users" />
         </EntityContainer>
         <EntityType Name="Book">
           <Key>
@@ -245,6 +255,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -296,6 +314,15 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="BookId" ColumnName="BookId" />
           <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(DataManager.Users)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

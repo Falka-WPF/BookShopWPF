@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/10/2021 23:35:21
+-- Date Created: 11/16/2021 22:26:41
 -- Generated from EDMX file: C:\Users\vsh15\source\repos\BookShopWPF\BookShopWPF\Data\DataManager.edmx
 -- --------------------------------------------------
 
@@ -26,6 +26,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_AuthorBook]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Books] DROP CONSTRAINT [FK_AuthorBook];
 GO
+IF OBJECT_ID(N'[dbo].[FK_SalesBook]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Sales] DROP CONSTRAINT [FK_SalesBook];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -42,6 +45,9 @@ IF OBJECT_ID(N'[dbo].[GenreSet]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Authors]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Authors];
+GO
+IF OBJECT_ID(N'[dbo].[Sales]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Sales];
 GO
 
 -- --------------------------------------------------
@@ -91,6 +97,14 @@ CREATE TABLE [dbo].[Sales] (
 );
 GO
 
+-- Creating table 'Users'
+CREATE TABLE [dbo].[Users] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Username] nvarchar(max)  NOT NULL,
+    [Password] nvarchar(max)  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -122,6 +136,12 @@ GO
 -- Creating primary key on [Id] in table 'Sales'
 ALTER TABLE [dbo].[Sales]
 ADD CONSTRAINT [PK_Sales]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Users'
+ALTER TABLE [dbo].[Users]
+ADD CONSTRAINT [PK_Users]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

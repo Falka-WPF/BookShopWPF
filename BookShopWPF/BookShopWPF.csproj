@@ -61,6 +61,7 @@
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
@@ -81,26 +82,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\SalesViewModel.cs" />
-    <Compile Include="View\SaleBookWindow.xaml.cs">
-      <DependentUpon>SaleBookWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\SalesView.xaml.cs">
-      <DependentUpon>SalesView.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Dictionaries\StyleSheet1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Data\Author.cs">
       <DependentUpon>DataManager.tt</DependentUpon>
     </Compile>
@@ -131,6 +112,36 @@
     <Compile Include="Data\Sales.cs">
       <DependentUpon>DataManager.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Users.cs">
+      <DependentUpon>DataManager.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\SalesViewModel.cs" />
+    <Compile Include="View\AuthorizationWindow.xaml.cs">
+      <DependentUpon>AuthorizationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SaleBookWindow.xaml.cs">
+      <DependentUpon>SaleBookWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SalesView.xaml.cs">
+      <DependentUpon>SalesView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Dictionaries\StyleSheet1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AuthorizationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Models\ABGModel.cs" />
     <Compile Include="ViewModel\AppViewModel.cs" />
     <Compile Include="ViewModel\BookViewModel.cs" />
