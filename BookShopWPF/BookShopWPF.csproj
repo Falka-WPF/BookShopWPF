@@ -81,8 +81,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="View\SalesControl.xaml.cs">
-      <DependentUpon>SalesControl.xaml</DependentUpon>
+    <Compile Include="ViewModel\SalesViewModel.cs" />
+    <Compile Include="View\SaleBookWindow.xaml.cs">
+      <DependentUpon>SaleBookWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SalesView.xaml.cs">
+      <DependentUpon>SalesView.xaml</DependentUpon>
     </Compile>
     <Page Include="Dictionaries\StyleSheet1.xaml">
       <SubType>Designer</SubType>
@@ -134,7 +138,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\SalesControl.xaml">
+    <Page Include="View\SaleBookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SalesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -20,7 +20,11 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0" Grid.ColumnSpan="3">
-            <MenuItem Header="Sales control" Command="{Binding OpenSalesWindows}"></MenuItem>
+            <MenuItem Header="Sells control">
+                <MenuItem Header="Sells" Command="{Binding OpenSalesView}"/>
+                <MenuItem Header="Sell book" Command="{Binding OpenSalesWindows}"/>
+            </MenuItem>
+           
         </Menu>
         
         <DockPanel Grid.Column="0" Grid.Row="1">

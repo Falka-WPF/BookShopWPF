@@ -274,15 +274,44 @@ namespace BookShopWPF.ViewModel
           })); }
 
         }
-        private RelayCommand _openSalesWindows;
+        private RelayCommand _openSalesWindow;
         public RelayCommand OpenSalesWindows
         {
             get {
-                return _openSalesWindows ?? (_openSalesWindows = new RelayCommand((obj) =>
+                return _openSalesWindow ?? (_openSalesWindow = new RelayCommand((obj) =>
           {
-              SalesControl sc = new SalesControl();
-              sc.ShowDialog();
+              SaleBookWindow sc = new SaleBookWindow();
+              if (sc.ShowDialog() == true)
+              {
+                  DateTime sellDate = sc.date;
+                  if (SelectedBook != null)
+                  {
+                      int SBookId = SelectedBook.Id;
+                      Sales s = new Sales() { BookId = SBookId, SaleDate = sellDate };
+                      _dmc.Sales.Add(s);
+                      _dmc.SaveChanges();
+                      System.Windows.MessageBox.Show("Sold sucessfully!\n", "Information", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+
+                  }
+                  else
+                  {
+                      System.Windows.MessageBox.Show("Book not selected!\n", "Information", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+                  }
+              }
           }));
+            }
+        }
+
+        private RelayCommand _openSalesView;
+        public RelayCommand OpenSalesView
+        {
+            get
+            {
+                return _openSalesView ?? (_openSalesView = new RelayCommand((obj) =>
+                {
+                    SalesView sc = new SalesView(_dmc);
+                    sc.ShowDialog();
+                }));
             }
         }
         private void LoadList()

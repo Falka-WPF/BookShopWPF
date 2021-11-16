@@ -11,17 +11,25 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BookShopWPF.Data;
+using BookShopWPF.ViewModel;
 
 namespace BookShopWPF.View
 {
     /// <summary>
-    /// Логика взаимодействия для SalesControl.xaml
+    /// Логика взаимодействия для SalesView.xaml
     /// </summary>
-    public partial class SalesControl : Window
+    public partial class SalesView : Window
     {
-        public SalesControl()
+        public SalesView(DataManagerContainer dmc)
         {
             InitializeComponent();
+            this.DataContext = new SalesViewModel(dmc);
+        }
+
+        private void Close_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
