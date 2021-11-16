@@ -22,6 +22,7 @@ namespace BookShopWPF.ViewModel
         public Author SelectedAuthor { get; set; }
         public ObservableCollection<Genre> Genres { get; set; }
         public Genre SelectedGenre { get; set; }
+        public string BookNameFindText { get; set; }
         public ObservableCollection<Publisher> Publishers { get; set; }
         public Publisher SelectedPublisher { get; set; }
         public ObservableCollection<BookViewModel> Books { get; set; }
@@ -181,11 +182,21 @@ namespace BookShopWPF.ViewModel
             get { return _filterItems ?? (_filterItems = new RelayCommand((obj) => {
             if (SelectedAuthor != null && SelectedGenre != null && SelectedPublisher != null)
                 {
+                    
                     Books.Clear();
                     int SAuthorId = SelectedAuthor.Id;
                     int SGenreId = SelectedGenre.Id;
                     int SPublisherId = SelectedPublisher.Id;
-                    var items = _dmc.Books.Where(b => (b.AuthorId == SAuthorId && b.GenreId == SGenreId && b.PublisherId == SPublisherId)).ToList();
+                    List<Book> items;
+                    if (BookNameFindText == "")
+                    {
+                        items = _dmc.Books.Where(b => (b.AuthorId == SAuthorId && b.GenreId == SGenreId && b.PublisherId == SPublisherId)).ToList();
+
+                    }
+                    else
+                    {
+                        items = _dmc.Books.Where(b => (b.AuthorId == SAuthorId && b.GenreId == SGenreId && b.PublisherId == SPublisherId)).Where(b => b.Title.StartsWith(BookNameFindText)).ToList();
+                    }
                     foreach (var item in items)
                     { 
                         Books.Add(new BookViewModel(item));

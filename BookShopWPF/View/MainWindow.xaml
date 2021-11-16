@@ -28,12 +28,13 @@
         </Menu>
         
         <DockPanel Grid.Column="0" Grid.Row="1">
+            <Label Content="BookName" DockPanel.Dock="Top"/>
+            <TextBox Text="{Binding BookNameFindText}" DockPanel.Dock="Top"/>
             <Label Content="Author:" DockPanel.Dock="Top"/>
             <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding Authors}" SelectedItem="{Binding SelectedAuthor}" DisplayMemberPath="FIO"/>
             <Label Content="Publisher:" DockPanel.Dock="Top"/>
             <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding Publishers}" SelectedItem="{Binding SelectedPublisher}" DisplayMemberPath="Name"/>
-            <Label Content="Genre:" DockPanel.Dock="Top"
-                   />
+            <Label Content="Genre:" DockPanel.Dock="Top"/>
             <ComboBox DockPanel.Dock="Top" ItemsSource="{Binding Genres}" SelectedItem="{Binding SelectedGenre}" DisplayMemberPath="Name"/>
             <Button Foreground="DeepPink" DockPanel.Dock="Top" Content="Filter" Command="{Binding FilterItems}"/>
             <Button Foreground="Red" DockPanel.Dock="Top" Content="Reset filter" Command="{Binding ResetItems}"/>
